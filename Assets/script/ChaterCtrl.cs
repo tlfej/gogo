@@ -23,8 +23,9 @@ public class ChaterCtrl : MonoBehaviour {
     private GameObject ca;
     public Anim anim;
     public Animation _animation;
+    private Animator animator;
 
-    
+
 
 
     Vector3 movedir;
@@ -37,8 +38,9 @@ public class ChaterCtrl : MonoBehaviour {
         _animation.clip = anim.wait;
         _animation.Play();
         ca = GameObject.Find("Main Camera");
-        
-	}
+        animator = this.gameObject.GetComponent<Animator>();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -52,16 +54,19 @@ public class ChaterCtrl : MonoBehaviour {
         {
            
             ca.transform.LookAt(tr.position);
-            _animation.CrossFade(anim.walk.name, 0.3f);
+            animator.SetBool("IsWalk", true);
+          //  _animation.CrossFade(anim.walk.name, 0.3f);
 
         }
         else if (Input.GetMouseButtonDown(0))
         {
-            _animation.CrossFade(anim.attack.name, 0.3f);
+            animator.SetTrigger("IsAttack");
+          //  _animation.CrossFade(anim.attack.name, 0.3f);
         }
         else
         {
-            _animation.CrossFade(anim.wait.name, 0.3f);
+            animator.SetBool("IsWalk", false);
+            //  _animation.CrossFade(anim.wait.name, 0.3f);
         }
        
 	}
